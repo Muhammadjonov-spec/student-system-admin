@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="layout">
+        <div class="sidebar">
+            <h2>SMS Admin</h2>
+            <ul>
+                <li>Dashboard</li>
+                <li>Students</li>
+                <li>Courses</li>
+                <li>Settings</li>
+            </ul>
+        </div>
+
+        <div class="main">
+            <div class="topbar">
+                <h1>Student Dashboard</h1>
+            </div>
+            <div class="cards">
+                <div class="card">
+                    <h3>Total Students</h3>
+                    <p id="totalStudents">0</p>
+                </div>
+                <div class="card">
+                    <h3>Total Courses</h3>
+                    <p>5</p>
+                </div>
+                <div class="card">
+                    <h3>Active Students</h3>
+                    <p>100%</p>
+                </div>
+            </div>
+            <div class="form">
+                <input type="text"
+                    id="studentId"
+                    placeholder="ID">
+                <input type="text"
+                    id="firstName"
+                    placeholder="First Name">
+                <input type="text"
+                    id="lastName"
+                    placeholder="Last Name">
+                <input type="number"
+                    id="age"
+                    placeholder="Age">
+                <input type="text"
+                    id="course"
+                    placeholder="Course">
+                <input type="text"
+                    id="phone"
+                    placeholder="Phone">
+                <button onclick="addStudent()">
+                    Add Student
+                </button>
+
+            </div>
+            <input type="text"
+                id="search"
+                placeholder="Search student..."
+                onkeyup="searchStudent()">
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Age</th>
+                            <th>Course</th>
+                            <th>Phone</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentsTable"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+   <div class="modal" id="editModal">
+    <div class="modal-content">
+        <h2>Edit Student</h2>
+       <input type="text"
+            id="editStudentId"
+            placeholder="Student ID">
+        <input type="text"
+            id="editFirstName"
+            placeholder="First Name">
+        <input type="text"
+            id="editLastName"
+            placeholder="Last Name">
+        <input type="number"
+            id="editAge"
+            placeholder="Age">
+        <input type="text"
+            id="editCourse"
+            placeholder="Course">
+        <input type="text"
+            id="editPhone"
+            placeholder="Phone">
+        <button onclick="updateStudent()">
+            Save Changes
+        </button>
+        <button onclick="closeModal()">
+            Close
+        </button>
+    </div>
+
+</div>
+    <script src="app.js"></script>
+
+</body>
+</html>
