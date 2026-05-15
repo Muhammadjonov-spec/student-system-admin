@@ -59,7 +59,7 @@ body{
     gap:12px;
     padding:14px 16px;
     margin-bottom:10px;
-    border-radius:12px;
+    border-radius:7px;
     cursor:pointer;
     transition:0.3s;
 }
@@ -155,7 +155,7 @@ body{
 .form-container{
     background:var(--card);
     border:1px solid var(--border);
-    border-radius:18px;
+    border-radius:10px;
     padding:20px;
     margin-bottom:25px;
 }
@@ -290,6 +290,62 @@ tbody tr:hover{
     border-radius:5px;
     padding:14px;
     color:white;
+}
+
+#toast{
+    position:fixed;
+    top:20px;
+    right:20px;
+    background:#2563eb;
+    color:white;
+    padding:15px 20px;
+    border-radius:7px;
+    font-weight:600;
+    opacity:0;
+    pointer-events:none;
+    transition:0.3s;
+    z-index:99999;
+}
+#toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+#pagination{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+    flex-wrap:wrap;
+}
+
+.page-btn{
+    background:#1e293b;
+    border:1px solid #334155;
+    color:white;
+    padding:10px 15px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.page-btn.active{
+    background:#2563eb;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+select{
+    background:#1e293b;
+    color:white;
+    border-radius: 5px;
+    border:1px solid #334155;
+    padding:12px;
+    border-radius:10px;
 }
 
 @media(max-width:992px){

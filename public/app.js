@@ -1,5 +1,7 @@
 const table = document.getElementById("studentsTable");
+let currentPage = 1;
 
+const rowsPerPage = 5;
 
 let currentEditId = null;
 let allStudents = [];
@@ -14,9 +16,12 @@ async function loadStudents() {
 }
 
 
-function renderStudents(students) {
+function renderStudents(students){
     table.innerHTML = "";
-    students.forEach(student => {
+    const start =(currentPage - 1) * rowsPerPage;
+    const end =start + rowsPerPage;
+    const paginated = students.slice(start,end);
+    paginated.forEach(student => {
         table.innerHTML += `
         <tr>
             <td>${student.studentId}</td>
@@ -38,7 +43,31 @@ function renderStudents(students) {
         </tr>
         `;
     });
+    renderPagination(students);
 }
+
+
+const renderPagination=(students)=>{
+    const totalPages=Math.ceil(students.length/rowsPerPage)
+    const pagination=document.getElementById("pagination")
+
+    pagination.innerHTML=""
+    for(let i=1; i<=totalPages; i++){
+        pagination.innerHTML+=`
+         <button
+            class="page-btn ${currentPage === i ? "active" : ""}"
+            onclick="changePage(${i})">
+            ${i}
+        </button>
+        `
+    }
+}
+
+const changePage=(page)=>{
+    currentPage=page
+    renderStudents(allStudents)
+}
+
 async function addStudent() {
     const student = {
         studentId:
@@ -54,6 +83,17 @@ async function addStudent() {
         phone:
             document.getElementById("phone").value
     };
+    if (
+        !student.studentId ||
+        !student.firstName ||
+        !student.lastName ||
+        !student.age ||
+        !student.course ||
+        !student.phone
+    ) {
+        showToast("Please fill all fields");
+        return;
+    }
     await fetch("/api/students", {
         method: "POST",
         headers: {
@@ -67,13 +107,16 @@ async function addStudent() {
     document.getElementById("age").value = "";
     document.getElementById("course").value = "";
     document.getElementById("phone").value = "";
+    showToast("Student added successfully");
     loadStudents();
 }
-
-async function deleteStudent(id) {
-    await fetch(`/api/students/${id}`, {
-        method: "DELETE"
+async function deleteStudent(id){
+    const check =confirm("Delete this student?");
+    if(!check) return;
+    await fetch(`/api/students/${id}`,{
+        method:"DELETE"
     });
+    showToast("Student deleted");
     loadStudents();
 }
 
@@ -127,7 +170,46 @@ async function updateStudent(id) {
         },
         body: JSON.stringify(updatedStudent)
     });
+    showToast("Student updated");
     closeModal();
     loadStudents();
+}
+
+const showToast = message=>{
+    const toast = document.getElementById("toast");
+    toast.innerText = message;
+    toast.classList.add("show");
+    setTimeout(() => {
+        toast.classList.remove("show");
+    },3000);
+}
+function sortStudents(){
+    const value =
+        document.getElementById("sortSelect").value;
+    if(value === "asc"){
+        allStudents.sort((a,b) =>
+            a.firstName.localeCompare(b.firstName)
+        );
+    }
+    if(value === "desc"){
+        allStudents.sort((a,b) =>
+            b.firstName.localeCompare(a.firstName)
+        );
+    }
+    renderStudents(allStudents);
+}
+
+function showPage(pageId, element){
+    document.querySelectorAll(".page")
+    .forEach(page => {
+        page.classList.remove("active");
+    });
+    document.getElementById(pageId)
+    .classList.add("active")
+    document.querySelectorAll(".sidebar li")
+    .forEach(li => {
+        li.classList.remove("active");
+    });
+    element.classList.add("active");
 }
 loadStudents();
