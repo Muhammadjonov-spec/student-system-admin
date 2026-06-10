@@ -180,36 +180,33 @@ const showToast = message=>{
     toast.innerText = message;
     toast.classList.add("show");
     setTimeout(() => {
-        toast.classList.remove("show");
-    },3000);
+        toast.classList.remove("show")
+    },3000)
 }
 function sortStudents(){
     const value =
-        document.getElementById("sortSelect").value;
+        document.getElementById("sortSelect").value
     if(value === "asc"){
         allStudents.sort((a,b) =>
             a.firstName.localeCompare(b.firstName)
-        );
+        )
     }
     if(value === "desc"){
         allStudents.sort((a,b) =>
             b.firstName.localeCompare(a.firstName)
-        );
+        )
     }
-    renderStudents(allStudents);
+    renderStudents(allStudents)
 }
 
 function showPage(pageId, element){
-    document.querySelectorAll(".page")
-    .forEach(page => {
-        page.classList.remove("active");
-    });
-    document.getElementById(pageId)
-    .classList.add("active")
-    document.querySelectorAll(".sidebar li")
-    .forEach(li => {
-        li.classList.remove("active");
-    });
-    element.classList.add("active");
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active")
+    })
+    document.getElementById(pageId).classList.add("active")
+    document.querySelectorAll(".sidebar li").forEach(li => {
+        li.classList.remove("active")
+    })
+    element.classList.add("active")
 }
 loadStudents();
