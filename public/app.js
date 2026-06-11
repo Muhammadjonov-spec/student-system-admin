@@ -1,26 +1,26 @@
 const table = document.getElementById("studentsTable");
-let currentPage = 1;
+let currentPage = 1
 
-const rowsPerPage = 5;
+const rowsPerPage = 5
 
-let currentEditId = null;
-let allStudents = [];
+let currentEditId = null
+let allStudents = []
 
 async function loadStudents() {
-    const response = await fetch("/api/students");
-    const students = await response.json();
-    allStudents = students;
-    renderStudents(students);
+    const response = await fetch("/api/students")
+    const students = await response.json()
+    allStudents = students
+    renderStudents(students)
     document.getElementById("totalStudents").innerText =
-        students.length;
+        students.length
 }
 
 
 function renderStudents(students){
-    table.innerHTML = "";
-    const start =(currentPage - 1) * rowsPerPage;
-    const end =start + rowsPerPage;
-    const paginated = students.slice(start,end);
+    table.innerHTML = ""
+    const start =(currentPage - 1) * rowsPerPage
+    const end =start + rowsPerPage
+    const paginated = students.slice(start,end)
     paginated.forEach(student => {
         table.innerHTML += `
         <tr>
@@ -43,7 +43,7 @@ function renderStudents(students){
         </tr>
         `;
     });
-    renderPagination(students);
+    renderPagination(students)
 }
 
 
@@ -78,21 +78,13 @@ async function addStudent() {
             document.getElementById("lastName").value,
         age:
             document.getElementById("age").value,
-        course:
-            document.getElementById("course").value,
+        course:document.getElementById("course").value,
         phone:
             document.getElementById("phone").value
     };
-    if (
-        !student.studentId ||
-        !student.firstName ||
-        !student.lastName ||
-        !student.age ||
-        !student.course ||
-        !student.phone
-    ) {
+    if (!student.studentId ||!student.firstName ||!student.lastName ||!student.age ||!student.course ||!student.phone) {
         showToast("Please fill all fields");
-        return;
+        return
     }
     await fetch("/api/students", {
         method: "POST",
@@ -100,7 +92,7 @@ async function addStudent() {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(student)
-    });
+    })
     document.getElementById("studentId").value = "";
     document.getElementById("firstName").value = "";
     document.getElementById("lastName").value = "";

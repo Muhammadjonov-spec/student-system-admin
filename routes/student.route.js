@@ -1,5 +1,6 @@
 const router = require("express").Router()
 const Student = require("../models/student.model")
+const auth=require("../middlewares/auth.middleware")
 
 router.get("/", async (req, res) => {
   const students = await Student.find()
