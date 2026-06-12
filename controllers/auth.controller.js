@@ -5,7 +5,7 @@ const bcrypt=require("bcryptjs")
 exports.register=async(req, res)=>{
   try {
     const {fullName, email, password}=req.body
-    const exists=User.findOne({email})
+    const exists=await User.findOne({email})
     if(exists){
       return res.status(400).json({
         messge:"This email is Already exists"

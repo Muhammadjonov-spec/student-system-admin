@@ -14,6 +14,11 @@ async function loadStudents() {
     document.getElementById("totalStudents").innerText =
         students.length
 }
+const loadDashboard=async()=>{
+    const response=await fetch("/api/dashboard/stats")
+    const stats=await response.json()
+    document.getElementById("totalStudents").innerText=stats.totalStudents
+}
 
 
 function renderStudents(students){
@@ -112,15 +117,17 @@ async function deleteStudent(id){
     loadStudents();
 }
 
-const searchStudent = () => {
-    const value = document.getElementById("search").value.toLowerCase();
+const searchStudent =async () => {
+    const value = document.getElementById("search").value
+    const response=await fetch(`/api/students?search=${value}`)
 
-    const filtered = allStudents.filter(student =>
-        student.firstName.toLowerCase().includes(value) ||
-        student.lastName.toLowerCase().includes(value)
-    );
+    // const filtered = allStudents.filter(student =>
+    //     student.firstName.toLowerCase().includes(value) ||
+    //     student.lastName.toLowerCase().includes(value)
+    // )
+    const students=await response.json()
 
-    renderStudents(filtered);
+    renderStudents(students)
 }
 
 const openEditModal = (studentId) => {
@@ -201,4 +208,5 @@ function showPage(pageId, element){
     })
     element.classList.add("active")
 }
-loadStudents();
+loadDashboard()
+loadStudents()
